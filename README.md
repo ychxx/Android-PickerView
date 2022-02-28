@@ -4,4 +4,7 @@ repositories {
      maven { url 'https://jitpack.io' }
 }
 
-implementation 'com.github.ychxx:Android-PickerView:1.0'
+implementation 'com.github.ychxx:Android-PickerView:1.1'
+
+修改：
+1.迁移成AndroidX和gradle的版本升级
