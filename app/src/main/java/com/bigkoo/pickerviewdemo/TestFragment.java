@@ -3,8 +3,6 @@ package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,9 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class TestFragment extends Fragment implements View.OnClickListener {
     private View mView;

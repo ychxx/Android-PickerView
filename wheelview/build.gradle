@@ -5,13 +5,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion common_compile_sdk_version
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 31
-        versionName "4.1.0"
+        minSdkVersion common_min_sdk_version
+        targetSdkVersion common_target_sdk_version
+        versionCode 34
+        versionName "4.1.9"
     }
     buildTypes {
         release {
@@ -44,5 +44,6 @@ android {
 
 dependencies {
 //    compile fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }

@@ -2,7 +2,6 @@ package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +11,8 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.contrarywind.view.WheelView;
+
+import androidx.annotation.ColorInt;
 
 /**
  * Created by xiaosongzeem on 2018/3/20.
