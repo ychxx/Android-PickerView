@@ -174,28 +174,37 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
     /**
-     * 设置可以选择的时间范围, 要在setTime之前调用才有效果
+     * 设置可以选择的时间范围, 要在setTime之前调用才有效果(结束为空时，去当前时间)
      */
     public void setRangDate(Calendar startDate, Calendar endDate) {
+        Calendar startDateNew = null, endDateNew;
         if (startDate == null) {
             try {
                 Date date;
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 date = df.parse("1233-10-11");
-                Calendar startDateNew = Calendar.getInstance();
+                startDateNew = Calendar.getInstance();
                 startDateNew.setTime(date);
-                mPickerOptions.startDate = startDateNew;
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         } else {
-            mPickerOptions.startDate = startDate;
+            startDateNew = startDate;
         }
         if (endDate == null) {
-            mPickerOptions.endDate = Calendar.getInstance();
+            endDateNew = Calendar.getInstance();
         } else {
-            mPickerOptions.endDate = endDate;
+            endDateNew = endDate;
         }
+        setRangDateNoDefault(startDateNew, endDateNew);
+    }
+
+    /**
+     * 设置可以选择的时间范围, 要在setTime之前调用才有效果
+     */
+    public void setRangDateNoDefault(Calendar startDate, Calendar endDate) {
+        mPickerOptions.startDate = startDate;
+        mPickerOptions.endDate = endDate;
         wheelTime.setRangDate(mPickerOptions.startDate, mPickerOptions.endDate);
         initDefaultSelectedDate();
     }
