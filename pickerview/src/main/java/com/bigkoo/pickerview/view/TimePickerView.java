@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.ISelectTimeCallback;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -171,6 +173,33 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         initDefaultSelectedDate();
     }
 
+    /**
+     * 设置可以选择的时间范围, 要在setTime之前调用才有效果
+     */
+    public void setRangDate(Calendar startDate, Calendar endDate) {
+        if (startDate == null) {
+            try {
+                Date date;
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                date = df.parse("1233-10-11");
+                Calendar startDateNew = Calendar.getInstance();
+                startDateNew.setTime(date);
+                mPickerOptions.startDate = startDateNew;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mPickerOptions.startDate = startDate;
+        }
+        if (endDate == null) {
+            mPickerOptions.endDate = Calendar.getInstance();
+        } else {
+            mPickerOptions.endDate = endDate;
+        }
+        wheelTime.setRangDate(mPickerOptions.startDate, mPickerOptions.endDate);
+        initDefaultSelectedDate();
+    }
+
     private void initDefaultSelectedDate() {
         //如果手动设置了时间范围
         if (mPickerOptions.startDate != null && mPickerOptions.endDate != null) {
@@ -237,6 +266,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setTimeSelectListener(OnTimeSelectListener timeSelectListener) {
+        mPickerOptions.timeSelectListener = timeSelectListener;
     }
 
     /**
