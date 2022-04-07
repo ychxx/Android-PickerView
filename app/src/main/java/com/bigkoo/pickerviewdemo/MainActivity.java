@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.btn_Time && pvTime != null) {
             // pvTime.setDate(Calendar.getInstance());
             /* pvTime.show(); //show timePicker*/
+            pvTime.setRangDateNoDefault(Calendar.getInstance(), null);
+            pvTime.setDate(Calendar.getInstance());
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -281,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelColor(Color.WHITE)*/
                 /*.animGravity(Gravity.RIGHT)// default is center*/
                 .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
+//                .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
                     @Override

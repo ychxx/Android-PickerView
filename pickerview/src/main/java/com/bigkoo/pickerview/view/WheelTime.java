@@ -842,8 +842,8 @@ public class WheelTime {
             int year = startDate.get(Calendar.YEAR);
             int month = startDate.get(Calendar.MONTH) + 1;
             int day = startDate.get(Calendar.DAY_OF_MONTH);
-            int hour = endDate.get(Calendar.HOUR_OF_DAY);
-            int minute = endDate.get(Calendar.MINUTE);
+            int hour = startDate.get(Calendar.HOUR_OF_DAY);
+            int minute = startDate.get(Calendar.MINUTE);
             if (year < endYear) {
                 this.startMonth = month;
                 this.startDay = day;
