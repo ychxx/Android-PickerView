@@ -6,6 +6,7 @@ import android.view.View;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
+import com.contrarywind.adapter.IItemToContent;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 
@@ -214,6 +215,12 @@ public class WheelOptions<T> {
                 });
             }
         }
+    }
+
+    public void setItemToContent(IItemToContent itemToContent) {
+        wv_option1.setItemToContent(itemToContent);
+        wv_option2.setItemToContent(itemToContent);
+        wv_option3.setItemToContent(itemToContent);
     }
 
     public void setTextContentSize(int textSize) {

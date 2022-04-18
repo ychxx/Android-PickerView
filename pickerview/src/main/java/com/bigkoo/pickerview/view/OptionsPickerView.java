@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
+import com.contrarywind.adapter.IItemToContent;
 
 import java.util.List;
 
@@ -97,6 +98,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextColorOut(mPickerOptions.textColorOut);
         wheelOptions.setTextColorCenter(mPickerOptions.textColorCenter);
         wheelOptions.isCenterLabel(mPickerOptions.isCenterLabel);
+    }
+
+    public void setItemToContent(IItemToContent itemToContent) {
+        wheelOptions.setItemToContent(itemToContent);
     }
 
     /**

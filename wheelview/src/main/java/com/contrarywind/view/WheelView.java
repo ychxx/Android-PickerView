@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.contrarywind.adapter.WheelAdapter;
+import com.contrarywind.adapter.IItemToContent;
 import com.contrarywind.interfaces.IPickerViewData;
 import com.contrarywind.listener.LoopViewGestureListener;
 import com.contrarywind.listener.OnItemSelectedListener;
@@ -57,7 +58,7 @@ public class WheelView extends View {
     // Timer mTimer;
     private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> mFuture;
-
+    private IItemToContent mItemToContent;
     private Paint paintOuterText;
     private Paint paintCenterText;
     private Paint paintIndicator;
@@ -243,7 +244,7 @@ public class WheelView extends View {
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
         for (int i = 0; i < adapter.getItemsCount(); i++) {
-            String s1 = getContentText(adapter.getItem(i));
+            String s1 = getContentText(i);
             paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
 
             int textWidth = rect.width();
@@ -449,19 +450,19 @@ public class WheelView extends View {
         // 设置数组中每个元素的值
         int counter = 0;
         while (counter < itemsVisible) {
-            Object showText;
+            String showText;
             int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
 
             //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
                 index = getLoopMappingIndex(index);
-                showText = adapter.getItem(index);
+                showText = getContentText(index);
             } else if (index < 0) {
                 showText = "";
             } else if (index > adapter.getItemsCount() - 1) {
                 showText = "";
             } else {
-                showText = adapter.getItem(index);
+                showText = getContentText(index);
             }
 
             canvas.save();
@@ -480,10 +481,10 @@ public class WheelView extends View {
                 String contentText;
 
                 //如果是label每项都显示的模式，并且item内容不为空、label 也不为空
-                if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(getContentText(showText))) {
-                    contentText = getContentText(showText) + label;
+                if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(showText)) {
+                    contentText = showText + label;
                 } else {
-                    contentText = getContentText(showText);
+                    contentText = showText;
                 }
                 // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度.
                 float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
@@ -598,22 +599,43 @@ public class WheelView extends View {
         return index;
     }
 
-    /**
-     * 获取所显示的数据源
-     *
-     * @param item data resource
-     * @return 对应显示的字符串
-     */
-    private String getContentText(Object item) {
-        if (item == null) {
-            return "";
-        } else if (item instanceof IPickerViewData) {
-            return ((IPickerViewData) item).getPickerViewText();
-        } else if (item instanceof Integer) {
-            //如果为整形则最少保留两位数.
-            return getFixNum((int) item);
+//    /**
+//     * 获取所显示的数据源
+//     *
+//     * @param item data resource
+//     * @return 对应显示的字符串
+//     */
+//    private String getContentText(Object item) {
+//        if (item == null) {
+//            return "";
+//        } else if (item instanceof IPickerViewData) {
+//            return ((IPickerViewData) item).getPickerViewText();
+//        } else if (item instanceof Integer) {
+//            //如果为整形则最少保留两位数.
+//            return getFixNum((int) item);
+//        }
+//        return item.toString();
+//    }
+
+    private String getContentText(int position) {
+        Object item = adapter.getItem(position);
+        if (mItemToContent == null) {
+            if (item == null) {
+                return "";
+            } else if (item instanceof IPickerViewData) {
+                return ((IPickerViewData) item).getPickerViewText();
+            } else if (item instanceof Integer) {
+                //如果为整形则最少保留两位数.
+                return getFixNum((int) item);
+            }
+            return item.toString();
+        } else {
+            return mItemToContent.itemToString(item);
         }
-        return item.toString();
+    }
+
+    public void setItemToContent(IItemToContent itemToContent) {
+        this.mItemToContent = itemToContent;
     }
 
     private String getFixNum(int timeNum) {
