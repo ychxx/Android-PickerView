@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
 import com.contrarywind.adapter.IItemToContent;
+import com.contrarywind.listener.YcItemSelectListener;
 
 import java.util.List;
 
@@ -102,6 +103,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     public void setItemToContent(IItemToContent itemToContent) {
         wheelOptions.setItemToContent(itemToContent);
+    }
+
+    public void setItemSelectListener(YcItemSelectListener selectListener) {
+        wheelOptions.setItemSelectListener(selectListener);
     }
 
     /**

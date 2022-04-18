@@ -8,6 +8,7 @@ import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.contrarywind.adapter.IItemToContent;
 import com.contrarywind.listener.OnItemSelectedListener;
+import com.contrarywind.listener.YcItemSelectListener;
 import com.contrarywind.view.WheelView;
 
 import java.util.List;
@@ -217,6 +218,11 @@ public class WheelOptions<T> {
         }
     }
 
+    public void setItemSelectListener(YcItemSelectListener selectListener) {
+        wv_option1.setItemSelectListener(selectListener);
+        wv_option2.setItemSelectListener(selectListener);
+        wv_option3.setItemSelectListener(selectListener);
+    }
     public void setItemToContent(IItemToContent itemToContent) {
         wv_option1.setItemToContent(itemToContent);
         wv_option2.setItemToContent(itemToContent);

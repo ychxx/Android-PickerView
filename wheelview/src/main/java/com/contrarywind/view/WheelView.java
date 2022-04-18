@@ -21,6 +21,7 @@ import com.contrarywind.adapter.IItemToContent;
 import com.contrarywind.interfaces.IPickerViewData;
 import com.contrarywind.listener.LoopViewGestureListener;
 import com.contrarywind.listener.OnItemSelectedListener;
+import com.contrarywind.listener.YcItemSelectListener;
 import com.contrarywind.timer.InertiaTimerTask;
 import com.contrarywind.timer.MessageHandler;
 import com.contrarywind.timer.SmoothScrollTimerTask;
@@ -59,6 +60,7 @@ public class WheelView extends View {
     private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> mFuture;
     private IItemToContent mItemToContent;
+    private YcItemSelectListener mSelectListener;
     private Paint paintOuterText;
     private Paint paintCenterText;
     private Paint paintIndicator;
@@ -355,7 +357,11 @@ public class WheelView extends View {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    onItemSelectedListener.onItemSelected(getCurrentItem());
+                    int position = getCurrentItem();
+                    if (mSelectListener != null) {
+                        mSelectListener.onItemSelected(adapter.getItem(position), position);
+                    }
+                    onItemSelectedListener.onItemSelected(position);
                 }
             }, 200L);
         }
@@ -632,6 +638,10 @@ public class WheelView extends View {
         } else {
             return mItemToContent.itemToString(item);
         }
+    }
+
+    public void setItemSelectListener(YcItemSelectListener selectListener) {
+        this.mSelectListener = selectListener;
     }
 
     public void setItemToContent(IItemToContent itemToContent) {
